@@ -1,0 +1,80 @@
+using UnityEngine;
+using System.Collections;
+
+public class Jogo : MonoBehaviour {
+
+	public static bool UsandoBarreira;
+	public static int ContadorBarreira;
+	long Tempo,Tempo2,Contador,Tempo3,cdObstaculo,cdNeosaldina, ContadorUsando;
+	public static float VelocidadeObstaculo, VelocidadeCenario,VelocidadeNeosaldina;
+	public GameObject obj,Neosaldina, Voar;
+	
+	void Start () {
+		UsandoBarreira = false;
+		ContadorBarreira = 0;
+		VelocidadeObstaculo = 0.25f;
+		VelocidadeCenario = 0.5f;	
+		VelocidadeNeosaldina = 0.3f;
+		cdObstaculo = 250;
+		cdNeosaldina = 150;
+	
+	}
+
+	
+	void Update () {
+		
+		if(ContadorBarreira == 16){
+			UsandoBarreira = true;
+			ContadorBarreira = 0;
+		}
+		if(UsandoBarreira == false){
+			cdNeosaldina = 150;
+			cdObstaculo = 250;
+			VelocidadeCenario = 0.3f;
+			VelocidadeNeosaldina = 0.5f;
+			VelocidadeObstaculo = 0.25f;
+		}
+		if(ContadorUsando >= 200){
+			UsandoBarreira = false;
+			ContadorUsando = 0;
+		}
+			
+		if(UsandoBarreira){
+			VelocidadeObstaculo = 2f;
+			VelocidadeCenario = 2f;
+			VelocidadeNeosaldina = 2f;
+			cdObstaculo = 50;
+			cdNeosaldina = 25;
+		}
+		
+		if(Contador >= 300){
+			VelocidadeObstaculo += 0.05f;
+			Contador = 0;
+			Debug.Log(VelocidadeObstaculo);
+		}
+	if(Tempo >= cdObstaculo){
+			
+			Instantiate(obj);
+			Tempo = 0;
+			
+		}
+		if(Tempo2 >= cdNeosaldina){
+			Instantiate(Neosaldina);
+			Tempo2 = 0;
+		}
+		
+		if(Tempo3 >= 700){
+			Instantiate(Voar);
+			Tempo3 = 0;
+		}
+	}
+	
+	void FixedUpdate(){
+		Tempo++;
+		Tempo2++;
+		Contador++;
+		Tempo3++;
+		ContadorUsando++;
+		
+	}
+}

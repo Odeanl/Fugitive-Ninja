@@ -1,0 +1,95 @@
+using UnityEngine;
+using System.Collections;
+
+public class Personagem : MonoBehaviour {
+
+	public static bool Voando;
+	int Estado;
+	public float Velocidade, PosYMax, PosYMin;
+	long cdpulo, ContadorVoada;
+	bool Usoudescida;
+	
+	
+	
+	void Start () {
+	Velocidade = 0.30f;
+	PosYMax = 0.6f;
+	PosYMin = -6.5f;
+	Usoudescida = false;
+	Voando = false;
+		
+	}
+	
+	
+	void Update () {
+		if(cdpulo >= 150){
+			Usoudescida = false;
+			
+		}
+		
+		if(Voando == false){
+		switch(Estado)
+		{
+		case 0:
+		if(Input.GetMouseButtonDown(0)){	
+		Estado = 1;}
+		this.transform.position = new Vector3(-13.5f,-6.5f, 21.5f);
+		break;
+		case 1:
+		Subindo();
+		if(Input.GetMouseButtonDown(0) &&  Usoudescida == false){
+				this.transform.position = new Vector3(-13.5f,-6.5f, 21.5f);
+				Usoudescida = true;	
+			}
+		break;
+		case 2:
+		Descendo();
+			if(Input.GetMouseButtonDown(0) && Usoudescida == false){
+				this.transform.position = new Vector3(-13.5f,-6.5f, 21.5f);
+				Usoudescida = true;
+			}
+		break;
+		}
+	}
+		if(Voando){
+			this.transform.position = new Vector3(-13.5f,4.5f,21.5f);
+
+		}
+		if(ContadorVoada >= 200){
+			Voando = false;
+			ContadorVoada = 0;
+		}
+		
+		
+		
+	}
+	void Subindo()
+	{
+		this.transform.Translate(0.0f, Velocidade, 0.0f);
+		if (this.transform.position.y >= PosYMax) 
+		{
+			Estado = 2;
+		}
+	}
+	void Descendo()
+	{
+		this.transform.Translate(0.0f, -Velocidade/2 ,0.0f);
+		if (this.transform.position.y <= PosYMin)
+		{
+			
+			Estado = 0;
+		}
+		
+
+}
+	void FixedUpdate(){
+		if (Usoudescida){
+			cdpulo++;
+			
+		}
+		if(Voando){
+			ContadorVoada++;
+		}
+		
+	}
+}

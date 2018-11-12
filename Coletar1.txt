@@ -1,0 +1,34 @@
+using UnityEngine;
+using System.Collections;
+
+public class Coletar : MonoBehaviour {
+
+	
+	
+	public static int Pontos;
+	void Start () {
+	this.transform.position = new Vector3(40f, -5.5f, 21.5f);
+	}	
+	// Update is called once per frame
+	void Update () {
+		this.transform.position -= new Vector3(Jogo.VelocidadeNeosaldina, 0f,0f);
+		
+	
+	}
+	void OnCollisionEnter(Collision Colisao){
+		
+		if(Colisao.collider.tag == "Personagem"){
+			Pontos += 50;
+			this.transform.position = new Vector3(9999f,0f,0f);
+			Debug.Log("Pontos: " + Pontos);
+			if(Jogo.UsandoBarreira == false){
+				Jogo.ContadorBarreira += 1;
+				
+				Debug.Log(Jogo.ContadorBarreira);
+			}
+			Destroy(this.gameObject);
+			
+		}
+		
+	}
+}
